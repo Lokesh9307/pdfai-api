@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const VECTOR_SERVICE_URL = process.env.VECTOR_SERVICE_PORT_HOST_URL || 'http://localhost:5001';
+const VECTOR_SERVICE_URL = process.env.VECTOR_SERVICE_PORT_HOST_URL;
 
 export async function storePDFTextAsVectors(text) {
     const chunkSize = 500;
