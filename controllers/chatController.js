@@ -1,3 +1,6 @@
+import { processPDFBuffer } from '../utils/pdfProcessor.js';
+import { storePDFTextAsVectors } from '../utils/vectorStore.js';
+
 export async function handleChatWithPDF(req, res) {
     try {
         if (!req.file) {
