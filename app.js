@@ -11,6 +11,10 @@ app.use(express.json());
 
 app.use('/api/chat', chatRoutes);
 
+app.get('/health', (req, res) => {
+    res.json({ status: 'OK', message: 'Server is running smoothly.' });
+})
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
