@@ -10,6 +10,4 @@ const upload = multer({ storage });
 
 router.post('/upload', upload.single('pdf'), handleChatWithPDF);
 
-
-
 export default router;

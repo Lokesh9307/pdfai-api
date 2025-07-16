@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export async function generateAnswer(question, context) {
+export async function generateAnswer(question, contextChunks) {
+    const context = contextChunks.join('\n\n');
+
     const prompt = `
 Context:
 ${context}
@@ -26,6 +28,10 @@ Answer as clearly as possible based only on the context.
             'Content-Type': 'application/json'
         }
     });
+
+    if (!response.data.choices?.[0]?.message?.content) {
+        throw new Error('Invalid response from Groq API');
+    }
 
     return response.data.choices[0].message.content.trim();
 }

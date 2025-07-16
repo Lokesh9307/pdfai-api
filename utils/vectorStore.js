@@ -2,16 +2,10 @@ import axios from 'axios';
 
 const VECTOR_SERVICE_URL = process.env.VECTOR_SERVICE_PORT_HOST_URL;
 
-export async function storePDFTextAsVectors(text) {
-    const chunkSize = 500;
-    const chunks = [];
+export async function storePDFTextAsVectors(chunks) {
+    if (!Array.isArray(chunks)) throw new Error("Chunks must be an array of text.");
 
-    for (let i = 0; i < text.length; i += chunkSize) {
-        const chunk = text.slice(i, i + chunkSize);
-        chunks.push(chunk);
-    }
-
-    await axios.post(`${process.env.VECTOR_SERVICE_PORT_HOST_URL}/add_chunks`, { chunks });
+    await axios.post(`${VECTOR_SERVICE_URL}/add_chunks`, { chunks });
 }
 
 export async function retrieveRelevantChunks(query) {
@@ -20,5 +14,9 @@ export async function retrieveRelevantChunks(query) {
         top_k: 3
     });
 
-    return response.data.results.join('\n');
+    if (!response.data.results || !Array.isArray(response.data.results)) {
+        throw new Error('Invalid response from vector store API');
+    }
+
+    return response.data.results;  // Keep it as array of strings
 }
