@@ -11,7 +11,7 @@ export async function storePDFTextAsVectors(text) {
         chunks.push(chunk);
     }
 
-    await axios.post(`${VECTOR_SERVICE_PORT_HOST_URL}/add_chunks`, { chunks });
+    await axios.post(`${process.env.VECTOR_SERVICE_PORT_HOST_URL}/add_chunks`, { chunks });
 }
 
 export async function retrieveRelevantChunks(query) {
